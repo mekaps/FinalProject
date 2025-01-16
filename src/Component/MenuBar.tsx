@@ -57,10 +57,42 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
             color: "#000", // ฟอนต์สีดำ
           }}
         >
-          <li style={{ margin: "20px 0", fontSize: "18px" }}>ผู้ชาย</li>
-          <li style={{ margin: "20px 0", fontSize: "18px" }}>ผู้หญิง</li>
-          <li style={{ margin: "20px 0", fontSize: "18px" }}>สำหรับเด็ก</li>
-          <li style={{ margin: "20px 0", fontSize: "18px" }}>เกี่ยวกับ GHACA</li>
+           {/* เพิ่มลิงก์ในแต่ละรายการ */}
+           <li style={{ margin: "20px 0", fontSize: "18px" }}>
+            <a
+              href="/men"
+              style={{ textDecoration: "none", color: "#000" }} // ลิงก์คำว่าผู้ชาย
+            >
+              ผู้ชาย
+            </a>
+          </li>
+
+          <li style={{ margin: "20px 0", fontSize: "18px" }}>
+            <a
+              href="/women"
+              style={{ textDecoration: "none", color: "#000" }} // ลิงก์คำว่าผู้หญิง
+            >
+              ผู้หญิง
+            </a>
+          </li>
+
+           <li style={{ margin: "20px 0", fontSize: "18px" }}>
+            <a
+              href="/kids"
+              style={{ textDecoration: "none", color: "#000" }} // ลิงก์คำว่าสำหรับเด็ก
+            >
+              สำหรับเด็ก
+            </a>
+          </li>
+
+           <li style={{ margin: "20px 0", fontSize: "18px" }}>
+            <a
+              href="/about-ghaca"
+              style={{ textDecoration: "none", color: "#000" }} // ลิงก์คำว่าเกี่ยวกับ GHACA
+            >
+              เกี่ยวกับ GHACA
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -88,23 +120,38 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
             gap: "20px", // ระยะห่างระหว่างไอคอน
           }}
         >
-          <img
-            src={instagramIcon} // โลโก้ Instagram
-            alt="Instagram"
-            style={{
-              width: "50px", // ขนาดโลโก้
-              height: "40px",
-            }}
-          />
-          <img
-            src={facebookIcon} // โลโก้ Facebook
-            alt="Facebook"
-            style={{
-              width: "46px", // ขนาดโลโก้
-              height: "47px",
-              marginTop: "-2px", // ขยับสูงขึ้น
-            }}
-          />
+            {/* โลโก้ IG */}
+          <a
+            href="https://www.instagram.com/ghaca.officials/" // URL Instagram
+            target="_blank" // เปิดในแท็บใหม่
+            rel="noopener noreferrer"
+            >
+            <img
+                src={instagramIcon}
+                alt="Instagram"
+                style={{
+                width: "50px",
+                height: "40px",
+                }}
+            />
+            </a>
+
+          {/* โลโก้ Facebook */}
+          <a
+            href="https://www.facebook.com/profile.php?id=100007160436739&locale=th_TH" // ลิงก์ไปยัง Facebook Page
+            target="_blank" // เปิดในแท็บใหม่
+            rel="noopener noreferrer"
+          >
+            <img
+              src={facebookIcon}
+              alt="Facebook"
+              style={{
+                width: "46px", // ขนาดโลโก้
+                height: "45px",
+                marginTop: "-3px", // ขยับสูงขึ้น
+              }}
+            />
+          </a>
         </div>
       </div>
     </div>
