@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import "./App.css";
+import Header from "./Component/Header";
+import FashionSection from "./Component/FashionSection";
+import Menubar from "./Component/Menubar";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const [isMenuOpen, setMenuOpen] = useState(false); // สถานะเปิด/ปิดเมนู
+
+  const handleMenuClick = () => {
+    setMenuOpen(true); // เปิดเมนู
+  };
+
+  const handleCloseMenu = () => {
+    setMenuOpen(false); // ปิดเมนู
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="App" style={{ position: "relative", height: "100vh" }}>
+      {/* Header Component */}
+      <Header onMenuClick={handleMenuClick} />
 
-export default App
+      {/* Menubar Component */}
+      <Menubar isOpen={isMenuOpen} onClose={handleCloseMenu} />
+
+      {/* ข้อความ GHACA */}
+      <div
+        className="joan-regular"
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 500,
+          color: "#FFFFFF",
+          fontSize: "64px",
+          fontWeight: 200,
+          textTransform: "uppercase",
+          letterSpacing: "8px",
+          textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)",
+        }}
+      >
+        GHACA
+      </div>
+
+      {/* FashionSection Component */}
+      <main>
+        <FashionSection />
+      </main>
+    </div>
+  );
+};
+
+export default App;
