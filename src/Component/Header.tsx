@@ -1,6 +1,6 @@
 import React from "react";
-import searchIcon from "../assets/search.png";
-import menuIcon from "../assets/menu.png";
+import searchIcon from "../assets/Front/search.png";
+import menuIcon from "../assets/Front/menu.png";
 
 type HeaderProps = {
   onMenuClick: () => void; // ฟังก์ชันเปิดเมนู

@@ -1,54 +1,54 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./Component/Header";
 import FashionSection from "./Component/FashionSection";
-import Menubar from "./Component/Menubar";
+import Menubar from "./Component/MenuBar";
+import ProductPage from "./Component/ProductPage";
+import Footer from "./Component/Footer";
+import LoginPage from "./Component/LoginPage";
+import RegisterPage from "./Component/RegisterPage";
+import { UserProvider } from "./Component/User"; 
 
-const App: React.FC = () => {
-  const [isMenuOpen, setMenuOpen] = useState(false); // สถานะเปิด/ปิดเมนู
-
-  const handleMenuClick = () => {
-    setMenuOpen(true); // เปิดเมนู
-  };
-
-  const handleCloseMenu = () => {
-    setMenuOpen(false); // ปิดเมนู
-  };
+const AppContent: React.FC = () => {
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
-    <div className="App" style={{ position: "relative", height: "100vh" }}>
-      {/* Header Component */}
-      <Header onMenuClick={handleMenuClick} />
+    <div className="App" style={appStyle}>
+      <Header onMenuClick={() => setMenuOpen(true)} />
+      <Menubar isOpen={isMenuOpen} onClose={() => setMenuOpen(false)} />
 
-      {/* Menubar Component */}
-      <Menubar isOpen={isMenuOpen} onClose={handleCloseMenu} />
-
-      {/* ข้อความ GHACA */}
-      <div
-        className="joan-regular"
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          zIndex: 500,
-          color: "#FFFFFF",
-          fontSize: "64px",
-          fontWeight: 200,
-          textTransform: "uppercase",
-          letterSpacing: "8px",
-          textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)",
-        }}
-      >
-        GHACA
+      <div style={{ flex: 1, paddingBottom: "320px" }}> {/* ป้องกัน Footer ถูกบัง */}
+        <Routes>
+          <Route path="/" element={<FashionSection />} />
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
       </div>
 
-      {/* FashionSection Component */}
-      <main>
-        <FashionSection />
-      </main>
+      {/* แสดง Footer ทุกหน้า ยกเว้น FashionSection */}
+      {location.pathname !== "/" && <Footer />}
     </div>
   );
+};
+
+const App: React.FC = () => {
+  return (
+    <UserProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </UserProvider>
+  );
+};
+
+const appStyle: React.CSSProperties = {
+  position: "relative",
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
 };
 
 export default App;

@@ -1,7 +1,8 @@
 import React from "react";
-import closeIcon from "../assets/close-icon.png"; // ไอคอนปิด
-import instagramIcon from "../assets/IG icon.png"; // โลโก้ Instagram    
-import facebookIcon from "../assets/FB-icon.png"; // โลโก้ Facebook
+import { Link } from "react-router-dom";
+import closeIcon from "../assets/Front/close-icon.png"; // ไอคอนปิด
+import instagramIcon from "../assets/Front/IG icon.png"; // โลโก้ Instagram    
+import facebookIcon from "../assets/Front/FB-icon.png"; // โลโก้ Facebook
 
 type MenubarProps = {
   isOpen: boolean; // สถานะเปิด/ปิดเมนู
@@ -24,7 +25,7 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
         zIndex: 1500,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between", // กระจายตำแหน่งด้านบนและล่าง
+        justifyContent: "space-between",
       }}
     >
       {/* ปุ่มปิดเมนู */}
@@ -38,8 +39,8 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
         onClick={onClose}
       >
         <img
-          src={closeIcon} // ใช้รูปภาพปุ่มปิด
-          alt="Close"
+          src={closeIcon}
+          alt="Close Menu"
           style={{
             width: "24px",
             height: "24px",
@@ -47,68 +48,63 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
         />
       </div>
 
-      {/* รายการในเมนู */}
+      {/* รายการเมนู */}
       <div style={{ padding: "20px", fontFamily: "'Arial', sans-serif" }}>
         <ul
           style={{
             listStyle: "none",
             padding: 0,
             margin: 0,
-            color: "#000", // ฟอนต์สีดำ
+            color: "#000",
           }}
         >
-           {/* เพิ่มลิงก์ในแต่ละรายการ */}
-           <li style={{ margin: "20px 0", fontSize: "18px" }}>
-            <a
-              href="/men"
-              style={{ textDecoration: "none", color: "#000" }} // ลิงก์คำว่าผู้ชาย
-            >
-              ผู้ชาย
-            </a>
-          </li>
-
           <li style={{ margin: "20px 0", fontSize: "18px" }}>
-            <a
-              href="/women"
-              style={{ textDecoration: "none", color: "#000" }} // ลิงก์คำว่าผู้หญิง
+            <Link
+              to="/"
+              onClick={onClose}
+              style={{ textDecoration: "none", color: "#000" }}
             >
-              ผู้หญิง
-            </a>
+              หน้าแรก
+            </Link>
           </li>
-
-           <li style={{ margin: "20px 0", fontSize: "18px" }}>
-            <a
-              href="/kids"
-              style={{ textDecoration: "none", color: "#000" }} // ลิงก์คำว่าสำหรับเด็ก
+          <li style={{ margin: "20px 0", fontSize: "18px" }}>
+            <Link
+              to="/products"
+              onClick={onClose}
+              style={{ textDecoration: "none", color: "#000" }}
+            >
+              สินค้า
+            </Link>
+          </li>
+          <li style={{ margin: "20px 0", fontSize: "18px" }}>
+            <Link
+              to="/kids"
+              onClick={onClose}
+              style={{ textDecoration: "none", color: "#000" }}
             >
               สำหรับเด็ก
-            </a>
+            </Link>
           </li>
-
-           <li style={{ margin: "20px 0", fontSize: "18px" }}>
-            <a
-              href="/about-ghaca"
-              style={{ textDecoration: "none", color: "#000" }} // ลิงก์คำว่าเกี่ยวกับ GHACA
+          <li style={{ margin: "20px 0", fontSize: "18px" }}>
+            <Link
+              to="/about-ghaca"
+              onClick={onClose}
+              style={{ textDecoration: "none", color: "#000" }}
             >
               เกี่ยวกับ GHACA
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
 
-      {/* ส่วน "ติดต่อเรา" และไอคอน */}
-      <div
-        style={{
-          padding: "20px",
-          textAlign: "center", // จัดกึ่งกลางข้อความ
-        }}
-      >
+      {/* ส่วนติดต่อเรา */}
+      <div style={{ padding: "20px", textAlign: "center" }}>
         <div
           style={{
             fontSize: "18px",
             fontWeight: "bold",
             color: "#000",
-            marginBottom: "20px", // เว้นระยะด้านล่าง
+            marginBottom: "20px",
           }}
         >
           ติดต่อเรา
@@ -116,39 +112,38 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
         <div
           style={{
             display: "flex",
-            justifyContent: "center", // จัดไอคอนให้อยู่กึ่งกลาง
-            gap: "20px", // ระยะห่างระหว่างไอคอน
+            justifyContent: "center",
+            gap: "20px",
           }}
         >
-            {/* โลโก้ IG */}
+          {/* โลโก้ Instagram */}
           <a
-            href="https://www.instagram.com/ghaca.officials/" // URL Instagram
-            target="_blank" // เปิดในแท็บใหม่
+            href="https://www.instagram.com/ghaca.officials/"
+            target="_blank"
             rel="noopener noreferrer"
-            >
+          >
             <img
-                src={instagramIcon}
-                alt="Instagram"
-                style={{
-                width: "50px",
-                height: "40px",
-                }}
+              src={instagramIcon}
+              alt="Instagram"
+              style={{
+                width: "45px",
+                height: "35px",
+              }}
             />
-            </a>
+          </a>
 
           {/* โลโก้ Facebook */}
           <a
-            href="https://www.facebook.com/profile.php?id=100007160436739&locale=th_TH" // ลิงก์ไปยัง Facebook Page
-            target="_blank" // เปิดในแท็บใหม่
+            href="https://www.facebook.com/profile.php?id=100007160436739&locale=th_TH"
+            target="_blank"
             rel="noopener noreferrer"
           >
             <img
               src={facebookIcon}
               alt="Facebook"
               style={{
-                width: "46px", // ขนาดโลโก้
-                height: "45px",
-                marginTop: "-3px", // ขยับสูงขึ้น
+                width: "40px",
+                height: "40px",
               }}
             />
           </a>

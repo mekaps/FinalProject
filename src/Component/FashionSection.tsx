@@ -1,6 +1,6 @@
 import React from "react";
-import leftImage from "../assets/Women.jpeg";
-import rightImage from "../assets/men.jpeg";
+import leftImage from "../assets/Front/Women.jpeg";
+import rightImage from "../assets/Front/men.jpeg";
 
 const FashionSection: React.FC = () => {
   const handleLeftClick = () => {
