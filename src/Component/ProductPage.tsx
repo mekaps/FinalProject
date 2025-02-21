@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ ใช้สำหรับนำทาง
 import ProductHeader from "./HeaderProductPage";
 import Footer from "./Footer";
 
@@ -6,7 +7,8 @@ const ProductPage: React.FC = () => {
   const [products, setProducts] = useState([]); 
   const [sortOrder, setSortOrder] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [footerSize, setFooterSize] = useState(100); // ✅ ใช้เพื่อปรับ Footer ตาม Scroll
+  const [footerSize, setFooterSize] = useState(100);
+  const navigate = useNavigate(); // ✅ ใช้ Navigate
 
   const productsPerPage = 8;
 
@@ -34,36 +36,10 @@ const ProductPage: React.FC = () => {
     setCurrentPage(page);
   };
 
-  // ✅ เลื่อน Scroll ไปบนสุด เมื่อเปลี่ยนหน้า
-  useEffect(() => {
-    const content = document.getElementById("content-container");
-    if (content) {
-      content.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [currentPage]);
-
-  // ✅ ตรวจจับ Scroll แล้วปรับ Footer ใหญ่ขึ้นเมื่อเลื่อนสุด
-  const handleScroll = () => {
-    const content = document.getElementById("content-container");
-    if (content) {
-      const scrollTop = content.scrollTop;
-      const scrollHeight = content.scrollHeight - content.clientHeight;
-
-      if (scrollTop === 0 || scrollTop >= scrollHeight) {
-        setFooterSize(100); // 🔹 ขยาย Footer เมื่อลงสุด
-      } else {
-        setFooterSize(180); // 🔹 ขนาดปกติ
-      }
-    }
+  // ✅ เมื่อคลิกสินค้า → ไปยังหน้า Product Details
+  const goToProductDetails = (productId: string) => {
+    navigate(`/product/${productId}`);
   };
-
-  useEffect(() => {
-    const content = document.getElementById("content-container");
-    if (content) {
-      content.addEventListener("scroll", handleScroll);
-      return () => content.removeEventListener("scroll", handleScroll);
-    }
-  }, []);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", backgroundColor: "#FFFFFF" }}>
@@ -88,6 +64,7 @@ const ProductPage: React.FC = () => {
               key={product._id} 
               className="product-card" 
               style={productCardStyle}
+              onClick={() => goToProductDetails(product._id)} // ✅ คลิกแล้วไปหน้า Product Details
             >
               <img 
                 src={`http://localhost:5000${product.image}`} 
@@ -135,7 +112,7 @@ const contentStyle: React.CSSProperties = {
   flex: 1,
   padding: "20px",
   backgroundColor: "#FFFFFF",
-  overflowY: "auto", // ✅ Scroll Mouse ได้
+  overflowY: "auto",
 };
 
 const buttonStyle: React.CSSProperties = {
@@ -155,7 +132,8 @@ const productCardStyle: React.CSSProperties = {
   textAlign: "center",
   borderRadius: "5px",
   boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  transition: "transform 0.3s ease-in-out", // ✅ ทำให้ขยายลื่นไหล
+  transition: "transform 0.3s ease-in-out",
+  cursor: "pointer", // ✅ ทำให้คลิกได้
 };
 
 // ✅ CSS Hover Effect

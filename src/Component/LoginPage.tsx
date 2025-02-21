@@ -9,24 +9,21 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useUser();
   
-  // ✅ ฟังก์ชัน Login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
     const response = await fetch("http://localhost:5000/auth/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
     const data = await response.json();
     
     if (response.ok) {
-      localStorage.setItem("token", data.token); // 🔹 บันทึก Token
-      login(email); // บันทึกชื่อผู้ใช้
-      navigate("/products"); // 🔹 Redirect ไปหน้า Product
+      localStorage.setItem("token", data.token);
+      login(email);
+      navigate("/products");
     } else {
       setError(data.message || "❌ อีเมลหรือรหัสผ่านไม่ถูกต้อง");
     }
@@ -34,19 +31,25 @@ const LoginPage: React.FC = () => {
 
   return (
     <div style={containerStyle}>
-      {/* 🔹 ด้านซ้าย - โลโก้ */}
+      {/* 🔹 ด้านซ้าย (GHACA) */}
       <div style={leftPanelStyle}>
-        <h1 style={{ color: "#fff", fontSize: "36px" }}>GHACA</h1>
+        <h1 style={brandStyle}>GHACA</h1>
       </div>
 
-      {/* 🔹 ด้านขวา - ฟอร์ม Login */}
+      {/* 🔹 ด้านขวา (ฟอร์ม Login) */}
       <div style={rightPanelStyle}>
         <div style={loginBoxStyle}>
-          <h2 style={{ marginBottom: "20px" }}>เข้าสู่ระบบ</h2>
+          
+          {/* ✅ ไอคอน User อยู่ตรงกลางแนวตั้ง */}
+          <div style={userIconContainerStyle}>
+            <img src="../src/assets/Front/usericon.png" alt="User" style={userIconStyle} />
+          </div>
 
           {error && <p style={{ color: "red" }}>{error}</p>}
 
           <form onSubmit={handleLogin}>
+
+            {/* ✅ กล่อง Email (ลบไอคอนออก) */}
             <div style={inputContainerStyle}>
               <input 
                 type="email" 
@@ -58,6 +61,7 @@ const LoginPage: React.FC = () => {
               />
             </div>
 
+            {/* ✅ กล่อง Password (ลบไอคอนออก) */}
             <div style={inputContainerStyle}>
               <input 
                 type="password" 
@@ -69,13 +73,15 @@ const LoginPage: React.FC = () => {
               />
             </div>
 
-            <p style={{ textAlign: "right", cursor: "pointer", color: "#666" }}>ลืมรหัสผ่าน?</p>
+            <p style={{ textAlign: "right", cursor: "pointer", color: "#666" }}>Forgot your password?</p>
 
-            <button type="submit" style={signInButtonStyle}>เข้าสู่ระบบ</button>
+            {/* ✅ ปุ่มเข้าสู่ระบบ */}
+            <button type="submit" style={signInButtonStyle}>SIGN IN</button>
           </form>
 
-          <p style={{ marginTop: "10px" }}>
-            ยังไม่มีบัญชี? <span style={{ color: "#000", cursor: "pointer", fontWeight: "bold" }}>สร้างบัญชี</span>
+          {/* ✅ ลิงก์สมัครสมาชิกตรงกลาง */}
+          <p style={registerTextStyle}>
+            Create an account? <span style={{ fontWeight: "bold", cursor: "pointer" }}>Click Here</span>
           </p>
         </div>
       </div>
@@ -83,7 +89,7 @@ const LoginPage: React.FC = () => {
   );
 };
 
-/* 🔹 Styles */
+/* ✅ Styles */
 const containerStyle: React.CSSProperties = {
   display: "flex",
   height: "100vh",
@@ -97,6 +103,12 @@ const leftPanelStyle: React.CSSProperties = {
   justifyContent: "center",
 };
 
+const brandStyle: React.CSSProperties = {
+  color: "#fff",
+  fontSize: "40px",
+  fontWeight: "bold",
+};
+
 const rightPanelStyle: React.CSSProperties = {
   flex: 1,
   backgroundColor: "#fff",
@@ -107,11 +119,23 @@ const rightPanelStyle: React.CSSProperties = {
 
 const loginBoxStyle: React.CSSProperties = {
   textAlign: "center",
-  width: "300px",
+  width: "350px",
+};
+
+/* ✅ ปรับให้ไอคอน User อยู่ตรงกลางแนวตั้ง */
+const userIconContainerStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  marginBottom: "20px",
+};
+
+const userIconStyle: React.CSSProperties = {
+  width: "60px",
+  height: "60px",
 };
 
 const inputContainerStyle: React.CSSProperties = {
-  border: "1px solid #ccc",
+  backgroundColor: "#D9D9D9",
   padding: "10px",
   borderRadius: "5px",
   marginBottom: "10px",
@@ -122,6 +146,7 @@ const inputStyle: React.CSSProperties = {
   outline: "none",
   width: "100%",
   fontSize: "14px",
+  backgroundColor: "transparent",
 };
 
 const signInButtonStyle: React.CSSProperties = {
@@ -134,6 +159,13 @@ const signInButtonStyle: React.CSSProperties = {
   cursor: "pointer",
   borderRadius: "5px",
   marginTop: "10px",
+};
+
+const registerTextStyle: React.CSSProperties = {
+  marginTop: "15px",
+  textAlign: "center",
+  fontSize: "14px",
+  color: "#000",
 };
 
 export default LoginPage;

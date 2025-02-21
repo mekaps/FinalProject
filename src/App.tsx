@@ -9,6 +9,8 @@ import Footer from "./Component/Footer";
 import LoginPage from "./Component/LoginPage";
 import RegisterPage from "./Component/RegisterPage";
 import { UserProvider } from "./Component/User"; 
+import ProductDetailPage from "./Component/ProductDetailPage";
+
 
 const AppContent: React.FC = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -25,6 +27,8 @@ const AppContent: React.FC = () => {
           <Route path="/products" element={<ProductPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/product/:id" element={<ProductDetailPage />} />
+
         </Routes>
       </div>
 

@@ -82,7 +82,7 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
               onClick={onClose}
               style={{ textDecoration: "none", color: "#000" }}
             >
-              สำหรับเด็ก
+              ผู้ชาย
             </Link>
           </li>
           <li style={{ margin: "20px 0", fontSize: "18px" }}>
@@ -91,7 +91,7 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
               onClick={onClose}
               style={{ textDecoration: "none", color: "#000" }}
             >
-              เกี่ยวกับ GHACA
+              ผู้หญิง
             </Link>
           </li>
         </ul>

@@ -8,7 +8,7 @@ const ProductHeader: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user,cartCount } = useUser();
 
   return (
     <div style={headerStyle}>
@@ -33,12 +33,17 @@ const ProductHeader: React.FC = () => {
         {user && (
           <>
             {/* ไอคอนตะกร้าสินค้า */}
-            <img
-              src="../src/assets/Front/cart.png"
-              alt="Cart Icon"
-              style={cartIconStyle}
-              onClick={() => navigate("/cart")}
-            />
+            <div style={{ position: "relative", display: "inline-block" }}>
+              <img
+                src="../src/assets/Front/cart.png"
+                alt="Cart Icon"
+                style={cartIconStyle}
+                onClick={() => navigate("/cart")}
+              />
+              {cartCount > 0 && (
+                <span style={cartBadgeStyle}>{cartCount}</span>
+              )}
+            </div>
 
             {/* ไอคอน User (คลิกเพื่อเปิดเมนู) */}
             <img
@@ -68,6 +73,17 @@ const ProductHeader: React.FC = () => {
 };
 
 /* Styles */
+const cartBadgeStyle: React.CSSProperties = {
+  position: "absolute",
+  top: "-5px",
+  right: "-10px",
+  backgroundColor: "red",
+  color: "white",
+  borderRadius: "50%",
+  padding: "3px 8px",
+  fontSize: "12px",
+  fontWeight: "bold",
+};
 const headerStyle: React.CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
