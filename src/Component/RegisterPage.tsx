@@ -5,6 +5,8 @@ const RegisterPage: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -12,6 +14,12 @@ const RegisterPage: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    if (password !== confirmPassword) {
+      setMessage("❌ รหัสผ่านไม่ตรงกัน");
+      setLoading(false);
+      return;
+    }
 
     if (password.length < 6) {
       setMessage("❌ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร");
@@ -21,9 +29,9 @@ const RegisterPage: React.FC = () => {
 
     try {
       const response = await fetch("http://localhost:5000/auth/register", {
-        method: "POST",
+        method: "POST", 
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, phone }),
       });
 
       const data = await response.json();
@@ -43,91 +51,164 @@ const RegisterPage: React.FC = () => {
 
   return (
     <div style={containerStyle}>
-      <div style={formStyle}>
-        <h2 style={{ fontSize: "20px", color: "black", marginTop: "10px", fontWeight: "bold" }}>สมัครสมาชิก</h2>
+      {/* 🔹 ด้านซ้าย (GHACA) */}
+      <div style={leftPanelStyle}>
+        <h1 style={brandStyle}>GHACA</h1>
+      </div>
 
-        {message && <p style={messageStyle}>{message}</p>}
+      {/* 🔹 ด้านขวา (ฟอร์ม Register) */}
+      <div style={rightPanelStyle}>
+        <div style={registerBoxStyle}>
+          {/* ✅ ไอคอน User อยู่ตรงกลางแนวตั้ง */}
+          <div style={userIconContainerStyle}>
+            <img src="../src/assets/Front/usericon.png" alt="User" style={userIconStyle} />
+          </div>
 
-        <form onSubmit={handleRegister}>
-          <input
-            type="text"
-            placeholder="ชื่อของคุณ"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={inputStyle}
-            required
-          />
+          {message && <p style={messageStyle}>{message}</p>}
 
-          <input
-            type="email"
-            placeholder="อีเมล"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={inputStyle}
-            required
-          />
+          <form onSubmit={handleRegister}>
+            {/* ✅ ๊Username */}
+            <div style={inputContainerStyle}>
+              <input 
+                type="name" 
+                placeholder="Name" 
+                value={name} 
+                onChange={(e) => setName(e.target.value)}
+                style={inputStyle} 
+                required
+              />
+            </div>
 
-          <input
-            type="password"
-            placeholder="รหัสผ่าน (6 ตัวขึ้นไป)"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={inputStyle}
-            required
-          />
+            {/* ✅ Email */}
+            <div style={inputContainerStyle}>
+              <input 
+                type="email" 
+                placeholder="Email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)}
+                style={inputStyle} 
+                required
+              />
+            </div>
 
-          <button type="submit" style={buttonStyle} disabled={loading}>
-            {loading ? "⏳ กำลังสมัคร..." : "สมัครสมาชิก"}
-          </button>
-        </form>
+            {/* ✅ Password */}
+            <div style={inputContainerStyle}>
+              <input 
+                type="password" 
+                placeholder="Password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)}
+                style={inputStyle} 
+                required
+              />
+            </div>
 
-        <p style={bottomTextStyle}>
-          มีบัญชีแล้ว?{" "}
-          <span style={linkStyle} onClick={() => navigate("/login")}>
-            เข้าสู่ระบบ
-          </span>
-        </p>
+            {/* ✅ Confirm Password */}
+            <div style={inputContainerStyle}>
+              <input 
+                type="password" 
+                placeholder="Password Confirm" 
+                value={confirmPassword} 
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                style={inputStyle} 
+                required
+              />
+            </div>
 
-        <button style={backButtonStyle} onClick={() => navigate("/")}>🔙 กลับหน้าหลัก</button>
+            {/* ✅ Phone Number */}
+            <div style={inputContainerStyle}>
+              <input 
+                type="text" 
+                placeholder="Number" 
+                value={phone} 
+                onChange={(e) => setPhone(e.target.value)}
+                style={inputStyle} 
+                required
+              />
+            </div>
+
+            {/* ✅ Register Button */}
+            <button type="submit" style={registerButtonStyle} disabled={loading}>
+              {loading ? "⏳ Registering..." : "Register"}
+            </button>
+          </form>
+
+          {/* ✅ ลิงก์เข้าสู่ระบบ */}
+          <p style={bottomTextStyle}>
+            Have already an account?{" "}
+            <span style={linkStyle} onClick={() => navigate("/login")}>
+              Login Here
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-// ✅ **สไตล์ปรับปรุงใหม่**
+/* ✅ Styles */
 const containerStyle: React.CSSProperties = {
   display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
   height: "100vh",
-  backgroundColor: "#f5f5f5",
 };
 
-const formStyle: React.CSSProperties = {
-  width: "350px",
-  padding: "25px",
+const leftPanelStyle: React.CSSProperties = {
+  flex: 1,
+  backgroundColor: "#000",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const brandStyle: React.CSSProperties = {
+  color: "#fff",
+  fontSize: "40px",
+  fontWeight: "bold",
+};
+
+const rightPanelStyle: React.CSSProperties = {
+  flex: 1,
   backgroundColor: "#fff",
-  borderRadius: "8px",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-  textAlign: "center",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
-const titleStyle: React.CSSProperties = {
+const registerBoxStyle: React.CSSProperties = {
+  textAlign: "center",
+  width: "350px",
+};
+
+/* ✅ ปรับให้ไอคอน User อยู่ตรงกลางแนวตั้ง */
+const userIconContainerStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
   marginBottom: "20px",
 };
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "12px",
-  margin: "10px 0",
-  border: "1px solid #ccc",
-  borderRadius: "5px",
-  fontSize: "16px",
+const userIconStyle: React.CSSProperties = {
+  width: "60px",
+  height: "60px",
 };
 
-const buttonStyle: React.CSSProperties = {
+const inputContainerStyle: React.CSSProperties = {
+  backgroundColor: "#D9D9D9",
+  padding: "10px",
+  borderRadius: "5px",
+  marginBottom: "10px",
+};
+
+const inputStyle: React.CSSProperties = {
+  border: "none",
+  outline: "none",
   width: "100%",
-  padding: "12px",
+  fontSize: "14px",
+  backgroundColor: "transparent",
+};
+
+const registerButtonStyle: React.CSSProperties = {
+  padding: "10px",
+  width: "100%",
   backgroundColor: "#000",
   color: "#fff",
   border: "none",
@@ -139,30 +220,21 @@ const buttonStyle: React.CSSProperties = {
 
 const messageStyle: React.CSSProperties = {
   fontSize: "14px",
-  color: "red",
+  color: "#666",
   marginBottom: "10px",
 };
 
 const bottomTextStyle: React.CSSProperties = {
   textAlign: "center",
-  marginTop: "10px",
+  color: "#666",
+  marginTop: "15px",
+  fontSize: "14px",
 };
 
 const linkStyle: React.CSSProperties = {
-  color: "#007bff",
-  cursor: "pointer",
   fontWeight: "bold",
-};
-
-const backButtonStyle: React.CSSProperties = {
-  marginTop: "15px",
-  padding: "8px",
-  width: "100%",
-  backgroundColor: "#ccc",
-  border: "none",
-  fontSize: "14px",
   cursor: "pointer",
-  borderRadius: "5px",
+  color: "#000",
 };
 
 export default RegisterPage;

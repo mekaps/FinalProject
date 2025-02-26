@@ -48,8 +48,7 @@ const LoginPage: React.FC = () => {
           {error && <p style={{ color: "red" }}>{error}</p>}
 
           <form onSubmit={handleLogin}>
-
-            {/* ✅ กล่อง Email (ลบไอคอนออก) */}
+            {/* ✅ กล่อง Email */}
             <div style={inputContainerStyle}>
               <input 
                 type="email" 
@@ -61,7 +60,7 @@ const LoginPage: React.FC = () => {
               />
             </div>
 
-            {/* ✅ กล่อง Password (ลบไอคอนออก) */}
+            {/* ✅ กล่อง Password */}
             <div style={inputContainerStyle}>
               <input 
                 type="password" 
@@ -81,7 +80,10 @@ const LoginPage: React.FC = () => {
 
           {/* ✅ ลิงก์สมัครสมาชิกตรงกลาง */}
           <p style={registerTextStyle}>
-            Create an account? <span style={{ fontWeight: "bold", cursor: "pointer" }}>Click Here</span>
+            Create an account?{" "}
+            <span style={{ fontWeight: "bold", cursor: "pointer", color: "#000" }} onClick={() => navigate("/register")}>
+              Click Here
+            </span>
           </p>
         </div>
       </div>

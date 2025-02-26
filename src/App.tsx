@@ -10,6 +10,8 @@ import LoginPage from "./Component/LoginPage";
 import RegisterPage from "./Component/RegisterPage";
 import { UserProvider } from "./Component/User"; 
 import ProductDetailPage from "./Component/ProductDetailPage";
+import MyCart from "./Component/Mycart";
+
 
 
 const AppContent: React.FC = () => {
@@ -28,6 +30,7 @@ const AppContent: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<MyCart/>}/>
 
         </Routes>
       </div>
