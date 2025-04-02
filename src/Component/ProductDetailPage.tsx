@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "./User";
 import ProductHeader from "./HeaderProductPage";
 import Footer from "./Footer";
-import Women from "../assets/Front/women.jpeg";
+//import Women from "../assets/Front/women.jpeg";
 
 
 const ProductDetailPage: React.FC = () => {
@@ -55,7 +55,7 @@ const ProductDetailPage: React.FC = () => {
               src={`https://backend-production-4db9.up.railway.app${product.image}`}
               alt={product.name}
               style={imageStyle}
-              onError={(e) => (e.currentTarget.src = {Women})} // ใช้ภาพสำรองเมื่อไม่สามารถโหลดภาพได้
+              onError={(e) => (e.currentTarget.src = "../assets/Front/women.jpeg")} // ใช้ภาพสำรองเมื่อไม่สามารถโหลดภาพได้
             />
           </div>
 
