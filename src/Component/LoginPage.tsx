@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./User"; 
+import userIcon from "../assets/Front/usericon.png";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -8,6 +9,8 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useUser();
+  
+
   
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +45,7 @@ const LoginPage: React.FC = () => {
           
           {/* ✅ ไอคอน User อยู่ตรงกลางแนวตั้ง */}
           <div style={userIconContainerStyle}>
-            <img src="../public/assets/Front/usericon.png" alt="User" style={userIconStyle} />
+            <img src={userIcon} alt="User" style={userIconStyle} />
           </div>
 
           {error && <p style={{ color: "red" }}>{error}</p>}

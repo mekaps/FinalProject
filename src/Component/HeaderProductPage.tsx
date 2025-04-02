@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "./User";
 import Menubar from "./MenuBar";
 import UserMenu from "./UserMenu";
+import menuImage from '../assets/Front/menu.png';
 
 const ProductHeader: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +15,7 @@ const ProductHeader: React.FC = () => {
     <div style={headerStyle}>
       {/* Menu Section */}
       <div style={menuStyle} onClick={() => setIsMenuOpen(true)}>
-        <img src="../public/assets/Front/menu.png" alt="Menu Icon" style={menuIconStyle} />
+        <img src={menuImage} alt="Menu Icon" style={menuIconStyle} />
         <span style={menuTextStyle}>MENU</span>
       </div>
 

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import userIcon from "../assets/Front/usericon.png";
+
 
 const RegisterPage: React.FC = () => {
   const [name, setName] = useState("");
@@ -61,7 +63,7 @@ const RegisterPage: React.FC = () => {
         <div style={registerBoxStyle}>
           {/* ✅ ไอคอน User อยู่ตรงกลางแนวตั้ง */}
           <div style={userIconContainerStyle}>
-            <img src="../public/assets/Front/usericon.png" alt="User" style={userIconStyle} />
+            <img src={userIcon} alt="User" style={userIconStyle} />
           </div>
 
           {message && <p style={messageStyle}>{message}</p>}

@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
           <div style={{ fontWeight: "bold", marginBottom: "10px" }}>ช่องทางการชำระเงิน</div>
           <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
             <img
-              src="../public/assets/Front/Prompay.png" // แก้ไขเส้นทางรูปภาพ
+              src="../assets/Front/Prompay.png" // แก้ไขเส้นทางรูปภาพ
               style={{ width: "110px" }}
             />
           </div>
