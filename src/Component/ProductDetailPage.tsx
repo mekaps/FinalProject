@@ -10,12 +10,14 @@ const ProductDetailPage: React.FC = () => {
   const [product, setProduct] = useState<any>(null);
   const { addToCart, user } = useUser();
 
-
   useEffect(() => {
     fetch(`http://localhost:5000/products/${id}`)
       .then((res) => res.json())
-      .then((data) => setProduct(data))
-      .catch((error) => console.error("❌ Error fetching product:", error));
+      .then((data) => {
+        setProduct(data);
+        console.log("Fetched product:", data); // ตรวจสอบข้อมูลที่ดึงมาจาก backend
+      })
+      .catch((error) => console.error("Error fetching product:", error));
   }, [id]);
 
   if (!product) {
@@ -23,33 +25,19 @@ const ProductDetailPage: React.FC = () => {
   }
 
   // ✅ เพิ่มสินค้าในตะกร้าและเปลี่ยนเส้นทางไปยังหน้าตะกร้า
-  const handleAddToCart = () => {
+  const handleAddToCart = (size: string) => {
     if (!user) {
       alert("❌ กรุณาเข้าสู่ระบบก่อนเพิ่มสินค้าในตะกร้า!");
       navigate("/login");
       return;
     }
-  
-    addToCart(product);
-    alert("✅ เพิ่มสินค้าในตะกร้าแล้ว!");
-    navigate("/cart");
-  };
 
-  // ✅ ไปที่หน้าชำระเงิน
-  const handleBuyNow = () => {
-    if (!user) {
-      alert("❌ กรุณาเข้าสู่ระบบก่อนทำการซื้อสินค้า!");
-      navigate("/login");
-      return;
-    }
-  
-    if (product.stock <= 0) {
-      alert("❌ สินค้าหมดสต็อก!");
-      return;
-    }
-  
-    addToCart(product);
-    navigate("/checkout");
+    const productWithSize = { ...product, size };
+
+    console.log("Adding to cart:", productWithSize);
+    addToCart(productWithSize);  // เพิ่มไซส์ที่เลือกในตะกร้า
+    alert(`✅ เพิ่มสินค้าไซส์ ${size} ลงตะกร้าแล้ว!`);
+    navigate("/cart");  // เปลี่ยนเส้นทางไปหน้าตะกร้า
   };
 
   return (
@@ -57,11 +45,9 @@ const ProductDetailPage: React.FC = () => {
       <ProductHeader />
 
       <div style={containerStyle}>
-        {/* ✅ หัวข้อรายละเอียดสินค้า */}
         <h1 style={titleStyle}>รายละเอียดสินค้า</h1>
 
         <div style={contentStyle}>
-          {/* ✅ ภาพสินค้า */}
           <div style={imageContainerStyle}>
             <img
               src={`http://localhost:5000${product.image}`}
@@ -71,26 +57,31 @@ const ProductDetailPage: React.FC = () => {
             />
           </div>
 
-          {/* ✅ ข้อมูลสินค้า */}
           <div style={infoStyle}>
             <h2 style={productNameStyle}>{product.name}</h2>
             <p style={descStyle}>{product.description}</p>
 
-            {/* ✅ ราคา */}
             <div style={priceContainerStyle}>
               <span style={priceStyle}>{Number(product.price).toLocaleString()} บาท</span>
-              <span style={stockStyle}>{product.stock > 0 ? "✔ มีสินค้า" : "❌ หมดสต็อก"}</span>
+              <span style={stockStyle}>
+                {product.quantity > 0 ? `✔ มีสินค้า (${product.quantity} ชิ้น)` : "❌ หมดสต็อก"}
+              </span>
             </div>
 
-            {/* ✅ ปุ่มเพิ่มลงตะกร้า */}
-            <button style={cartButtonStyle} onClick={handleAddToCart}>
-              🛒 เพิ่มใส่ตะกร้า
-            </button>
-
-            {/* ✅ ปุ่มซื้อเลย */}
-            <button style={buyNowButtonStyle} onClick={handleBuyNow}>
-              🛍 ซื้อเลย
-            </button>
+            <div style={sizeContainerStyle}>
+              <h3 style={sizeTitleStyle}>เลือกไซส์</h3>
+              <div style={sizeOptionsContainerStyle}>
+                {["S", "M", "L", "XL"].map((size) => (
+                  <button
+                    key={size}
+                    style={sizeButtonStyle}
+                    onClick={() => handleAddToCart(size)} // เพิ่มไซส์ที่เลือกไปยังตะกร้า
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -99,6 +90,7 @@ const ProductDetailPage: React.FC = () => {
     </div>
   );
 };
+
 
 /* ✅ สไตล์ที่ปรับใหม่ */
 const pageContainerStyle: React.CSSProperties = {
@@ -206,6 +198,31 @@ const buyNowButtonStyle: React.CSSProperties = {
   borderRadius: "5px",
   width: "100%",
   textAlign: "center",
+};
+
+const sizeContainerStyle: React.CSSProperties = {
+  marginBottom: "20px",
+};
+
+const sizeTitleStyle: React.CSSProperties = {
+  fontSize: "18px",
+  fontWeight: "bold",
+  marginBottom: "10px",
+  color: "#000"
+};
+
+const sizeOptionsContainerStyle: React.CSSProperties = {
+  display: "flex",
+  gap: "10px",
+};
+
+const sizeButtonStyle: React.CSSProperties = {
+  padding: "8px 16px",
+  fontSize: "16px",
+  fontWeight: "bold",
+  border: "none",
+  cursor: "pointer",
+  borderRadius: "5px",
 };
 
 export default ProductDetailPage;

@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "./User"; 
-import closeIcon from "../assets//Front/close-icon.png"; // ไอคอนปิด
-import userIcon from "../assets//Front/usericon.png"; // ไอคอน User
+import closeIcon from "../assets/Front/close-icon.png"; // ไอคอนปิด
+import userIcon from "../assets/Front/usericon.png"; // ไอคอน User
+import editIcon from "../assets/Front/editbutton.png"; // ไอคอน Edit
 
 type UserMenuProps = {
   isOpen: boolean;
@@ -22,26 +23,34 @@ const UserMenu: React.FC<UserMenuProps> = ({ isOpen, onClose }) => {
           <img src={closeIcon} alt="Close" style={{ width: "24px", height: "24px" }} />
         </button>
 
-        {/* ไอคอน User */}
-        <img src={userIcon} alt="User Icon" style={userIconStyle} />
-        <p style={accountTextStyle}>{user ? `บัญชีของฉัน: ${user.user}` : "ผู้ใช้ไม่ได้ล็อกอิน"}</p>
+        {/* ส่วนของไอคอนผู้ใช้และปุ่มแก้ไข */}
+        <div style={userSectionStyle}>
+          <img src={userIcon} alt="User Icon" style={userIconStyle} />
+          <div style={accountSectionStyle}>
+            <p style={accountTextStyle}>{user ? `บัญชีของฉัน: ${user}` : "ผู้ใช้ไม่ได้ล็อกอิน"}</p>
+            {/* ลิงค์ไปยังหน้า Editprofile */}
+            <Link to="/Editprofile" style={editButtonStyle} onClick={onClose}>
+              <img src={editIcon} alt="Edit" style={{ width: "30px", height: "25px" }} />
+            </Link>
+          </div>
+        </div>
 
         {/* รายการเมนู */}
         <ul style={menuListStyle}>
           <li>
-            <Link to="/orders" style={menuItemStyle} onClick={onClose}>ประวัติการสั่งซื้อ</Link>
+            <Link to="/Purchase" style={menuItemStyle} onClick={onClose}>ประวัติการสั่งซื้อ</Link>
           </li>
           <li>
-            <Link to="/shipping-status" style={menuItemStyle} onClick={onClose}>สถานะการจัดส่ง</Link>
+            <Link to="https://th.kex-express.com/th/track/" style={menuItemStyle} onClick={onClose}>สถานะการจัดส่ง</Link>
           </li>
           <li>
             <Link to="/cart" style={cartItemStyle} onClick={onClose}>ตะกร้าของฉัน</Link>
           </li>
           <li>
-            <Link to="/help" style={menuItemStyle} onClick={onClose}>ช่วยเหลือ</Link>
+            <Link to="https://www.instagram.com/ghaca.officials/" style={menuItemStyle} onClick={onClose}>ช่วยเหลือ</Link>
           </li>
           <li>
-            <Link to="/news" style={menuItemStyle} onClick={onClose}>ข่าวสาร</Link>
+            <Link to="https://www.instagram.com/ghaca.officials/" style={menuItemStyle} onClick={onClose}>ข่าวสาร</Link>
           </li>
         </ul>
 
@@ -49,7 +58,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ isOpen, onClose }) => {
         <div style={{ flexGrow: 1 }}></div>
 
         {/* ลิงก์ออกจากระบบ */}
-        <Link to="/logout" style={logoutTextStyle} onClick={onClose}>ออกจากระบบ</Link>
+        <Link to="/login" style={logoutTextStyle} onClick={onClose}>ออกจากระบบ</Link>
       </div>
     </div>
   );
@@ -90,19 +99,36 @@ const closeButtonStyle: React.CSSProperties = {
   cursor: "pointer",
 };
 
+const userSectionStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginBottom: "20px",
+};
+
 const userIconStyle: React.CSSProperties = {
   width: "60px",
   height: "60px",
   borderRadius: "50%",
-  margin: "20px auto 10px auto",
+};
+
+const accountSectionStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  width: "calc(100% - 80px)", // ความกว้างที่เหลือจากไอคอน
 };
 
 const accountTextStyle: React.CSSProperties = {
   color: "black",
   fontSize: "16px",
   fontWeight: "bold",
-  textAlign: "center",
-  marginBottom: "20px",
+};
+
+const editButtonStyle: React.CSSProperties = {
+  marginLeft: "10px",
+  marginTop: "20px" ,
+  cursor: "pointer" ,
 };
 
 const menuListStyle: React.CSSProperties = {

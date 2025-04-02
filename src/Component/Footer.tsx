@@ -6,10 +6,13 @@ const Footer: React.FC = () => {
       style={{
         backgroundColor: "#000", // พื้นหลังสีดำ
         color: "#fff", // สีตัวอักษรสีขาว
-        padding: "10px ", // ระยะห่างด้านใน
+        padding: "20px", // ระยะห่างด้านใน
         display: "flex",
         flexDirection: "column", // จัดเลย์เอาต์ในแนวตั้ง
         alignItems: "center",
+        width: "100%", // ให้กว้างเต็มจอ
+        position: "relative", // ให้ตำแหน่ง relative
+        bottom: 0, // วางที่ด้านล่างสุด
       }}
     >
       {/* Logo Section */}

@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import closeIcon from "../assets/Front/close-icon.png"; // ไอคอนปิด
-import instagramIcon from "../assets/Front/IG icon.png"; // โลโก้ Instagram    
-import facebookIcon from "../assets/Front/FB-icon.png"; // โลโก้ Facebook
+import instagramIcon from "../assets/Front/IG.png"; // โลโก้ Instagram    
+import facebookIcon from "../assets/Front/FB.png"; // โลโก้ Facebook
 
 type MenubarProps = {
   isOpen: boolean; // สถานะเปิด/ปิดเมนู
@@ -77,22 +77,7 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
             </Link>
           </li>
           <li style={{ margin: "20px 0", fontSize: "18px" }}>
-            <Link
-              to="/kids"
-              onClick={onClose}
-              style={{ textDecoration: "none", color: "#000" }}
-            >
-              ผู้ชาย
-            </Link>
-          </li>
-          <li style={{ margin: "20px 0", fontSize: "18px" }}>
-            <Link
-              to="/about-ghaca"
-              onClick={onClose}
-              style={{ textDecoration: "none", color: "#000" }}
-            >
-              ผู้หญิง
-            </Link>
+  
           </li>
         </ul>
       </div>
@@ -127,7 +112,7 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
               alt="Instagram"
               style={{
                 width: "45px",
-                height: "35px",
+                height: "45px",
               }}
             />
           </a>
@@ -142,8 +127,9 @@ const Menubar: React.FC<MenubarProps> = ({ isOpen, onClose }) => {
               src={facebookIcon}
               alt="Facebook"
               style={{
-                width: "40px",
-                height: "40px",
+                width: "50px",
+                height: "50px",
+                marginTop: "-3px",
               }}
             />
           </a>

@@ -1,31 +1,42 @@
 {
-  "name": "gachaproject",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.3"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.15.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.15.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.14",
-    "globals": "^15.12.0",
-    "typescript": "~5.6.2",
-    "typescript-eslint": "^8.15.0",
-    "vite": "^6.0.1"
-  }
+    "homepage": "https://mekaps.github.io/FinalProject/",
+    "name": "gachaproject",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc -b && vite build",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "predeploy": "npm run build && npm run lint",
+        "deploy": "gh-pages -d build"
+    },
+    "dependencies": {
+        "@stripe/react-stripe-js": "^3.5.1",
+        "@stripe/stripe-js": "^6.1.0",
+        "axios": "^1.8.4",
+        "bcrypt": "^5.1.1",
+        "jspdf": "^3.0.1",
+        "promptpay-qr": "^0.5.0",
+        "qrcode.react": "^4.2.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-modal": "^3.16.3",
+        "react-router-dom": "^7.3.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.15.0",
+        "@types/react": "^18.3.12",
+        "@types/react-dom": "^18.3.1",
+        "@vitejs/plugin-react": "^4.3.4",
+        "eslint": "^9.15.0",
+        "eslint-plugin-react-hooks": "^5.0.0",
+        "eslint-plugin-react-refresh": "^0.4.14",
+        "gh-pages": "^6.3.0",
+        "globals": "^15.12.0",
+        "typescript": "~5.6.2",
+        "typescript-eslint": "^8.15.0",
+        "vite": "^6.0.1"
+    }
 }

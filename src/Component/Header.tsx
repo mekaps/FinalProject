@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // นำเข้า useNavigate
 import searchIcon from "../assets/Front/search.png";
 import menuIcon from "../assets/Front/menu.png";
 
@@ -7,6 +8,13 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+  const navigate = useNavigate(); // สร้าง useNavigate hook
+
+  // ฟังก์ชันที่เรียกเมื่อคลิกที่ไอคอนค้นหา
+  const handleSearchClick = () => {
+    navigate("/products"); // ทำการนำทางไปยังหน้าสินค้า
+  };
+
   return (
     <div
       style={{
@@ -29,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           width: "24px",
           cursor: "pointer",
           transition: "transform 0.3s ease, filter 0.3s ease",
-          filter: "invert(1)",
+          filter: "invert(1)", 
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "scale(1.2)";
@@ -39,6 +47,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           e.currentTarget.style.transform = "scale(1)";
           e.currentTarget.style.filter = "invert(1)";
         }}
+        onClick={handleSearchClick} // เมื่อคลิกจะไปยังหน้า ProductPage
       />
 
       {/* Menu Icon */}

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ ใช้สำหรับนำทาง
 import ProductHeader from "./HeaderProductPage";
-import Footer from "./Footer";
 
 const ProductPage: React.FC = () => {
   const [products, setProducts] = useState([]); 
   const [sortOrder, setSortOrder] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [footerSize, setFooterSize] = useState(100);
+  const [searchQuery, setSearchQuery] = useState<string>(""); // เพิ่ม state สำหรับค้นหาสินค้า
   const navigate = useNavigate(); // ✅ ใช้ Navigate
 
   const productsPerPage = 8;
@@ -27,10 +27,15 @@ const ProductPage: React.FC = () => {
     return 0;
   });
 
+  // ✅ ฟิลเตอร์สินค้าโดยชื่อ (ค้นหาชื่อสินค้า)
+  const filteredProducts = sortedProducts.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) // ค้นหาตามชื่อ
+  );
+
   // ✅ Pagination (แบ่งหน้าสินค้า)
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -57,6 +62,17 @@ const ProductPage: React.FC = () => {
           <button style={{ backgroundColor: "transparent", border: "none", fontSize: "16px", cursor: "pointer" }}>แนะนำ</button>
         </div>
 
+        {/* 🔹 ช่องค้นหาสินค้า */}
+        <div style={searchContainerStyle}>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="ค้นหาสินค้า..."
+            style={searchInputStyle}
+          />
+        </div>
+
         {/* 🔹 แสดงสินค้า */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px", justifyContent: "center" }}>
           {currentProducts.map((product) => (
@@ -73,13 +89,14 @@ const ProductPage: React.FC = () => {
               />
               <p style={{ fontSize: "20px", color: "black", marginTop: "10px", fontWeight: "bold" }}>{product.name}</p>
               <p style={{ fontWeight: "initial", color: "black" }}>{Number(product.price).toLocaleString()} บาท</p>
+              <p style={{ fontSize: "16px", color: "#888" }}>จำนวน: {product.quantity}</p> {/* แสดงจำนวนสินค้า */}
             </div>  
           ))}
         </div>
 
         {/* 🔹 ระบบแบ่งหน้า */}
         <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "10px" }}>
-          {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, index) => (
+          {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, index) => (
             <button
               key={index + 1}
               onClick={() => handlePageChange(index + 1)}
@@ -99,10 +116,6 @@ const ProductPage: React.FC = () => {
         </div>
       </div>
 
-      {/* ✅ Footer ปรับขนาดอัตโนมัติ */}
-      <div style={{ height: `${footerSize}px`, transition: "height 0.3s ease-in-out" }}>
-        <Footer />
-      </div>
     </div>
   );
 };
@@ -145,5 +158,21 @@ style.innerHTML = `
   }
 `;
 document.head.appendChild(style);
+
+// ✅ สไตล์ช่องค้นหาสินค้า
+const searchContainerStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  marginBottom: "20px",
+};
+
+const searchInputStyle: React.CSSProperties = {
+  padding: "10px",
+  fontSize: "16px",
+  width: "80%",
+  border: "1px solid #ccc",
+  borderRadius: "5px",
+  marginBottom: "20px",
+};
 
 export default ProductPage;

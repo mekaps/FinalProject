@@ -2,49 +2,63 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 
 interface UserContextType {
   user: string | null;
+  userName: string | null;
   phoneNumber: string;
-  cart: { productCode: string; name: string; image: string; price: number; quantity: number }[];
+  cart: { _id: string; name: string; image: string; price: number; quantity: number }[];
   login: (email: string) => void;
   logout: () => void;
   updatePhoneNumber: (newPhone: string) => void;
-  addToCart: (product: { productCode: string; name: string; image: string; price: number }) => void;
-  removeFromCart: (productCode: string) => void;
-  updateQuantity: (productCode: string, newQuantity: number) => void;
+  addToCart: (product: { _id: string; name: string; image: string; price: number }) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, newQuantity: number) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [cart, setCart] = useState<
-    { productCode: string; name: string; image: string; price: number; quantity: number }[]
-  >([]);
+  const [cart, setCart] = useState<{
+    _id: string;
+    name: string;
+    image: string;
+    price: number;
+    quantity: number;
+  }[]>([]);
 
-  // ✅ ดึงข้อมูลตะกร้าและเบอร์โทรศัพท์หลังจาก Login
-  useEffect(() => {
+  // ฟังก์ชันดึงข้อมูลตะกร้าจาก Backend
+  const fetchCartData = () => {
     if (user) {
-      fetch(`http://localhost:5000/user/${user}`)
+      fetch(`http://localhost:5000/cart/${user}`)
         .then((res) => res.json())
         .then((data) => {
-          setCart(data.cart);
-          setPhoneNumber(data.phoneNumber || ""); // ✅ ตั้งค่าเบอร์โทร (ถ้าไม่มีให้เป็น "")
+          setUserName(data.name);  // ตั้งค่า userName
+          setCart(Array.isArray(data.cart) ? data.cart : []); // ตั้งค่าตะกร้าให้เป็น array
+          setPhoneNumber(data.phoneNumber || ""); // ตั้งค่าเบอร์โทร
         })
         .catch((error) => console.error("❌ Error fetching user data:", error));
     }
-  }, [user]);
+  };
+
+  // ดึงข้อมูลจาก Backend เมื่อ login
+  useEffect(() => {
+    if (user) {
+      fetchCartData(); // เรียกใช้ฟังก์ชัน fetchCartData
+    }
+  }, [user]); // เมื่อ user เปลี่ยนแปลงจะดึงข้อมูลใหม่
 
   const login = (email: string) => {
-    setUser(email);
+    setUser(email); // ตั้งค่า user เมื่อ login
   };
 
   const logout = () => {
     setUser(null);
-    setCart([]);
+    setCart([]); // ลบข้อมูลตะกร้าเมื่อ logout
     setPhoneNumber("");
+    setUserName(null);
   };
 
-  // ✅ อัปเดตเบอร์โทรศัพท์
   const updatePhoneNumber = (newPhone: string) => {
     if (!user) return;
 
@@ -61,55 +75,81 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       .catch((error) => console.error("❌ Error updating phone number:", error));
   };
 
-  // ✅ เพิ่มสินค้าไปยังฐานข้อมูล MongoDB
-  const addToCart = (product: { productCode: string; name: string; image: string; price: number }) => {
+  const addToCart = (product: { _id: string; name: string; image: string; size: string; price: number }) => {
     if (!user) return;
-
-    fetch("http://localhost:5000/cart/add", {
+  
+    if (!product._id || !product.price || !product.size) {
+      console.error("❌ Missing _id, price, or size", product);
+      return;
+    }
+  
+    const email = user;
+  
+    fetch("http://localhost:5000/cart/add", { 
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: user, product }),
+      body: JSON.stringify({ email, products: [{ ...product, quantity: 1 }] }),  // ส่งไซส์ที่ผู้ใช้เลือก
     })
       .then((res) => res.json())
-      .then((data) => setCart(data))
+      .then((data) => {
+        setCart(data);  // อัปเดตตะกร้า
+      })
       .catch((error) => console.error("❌ Error adding to cart:", error));
   };
 
-  // ✅ อัปเดตจำนวนสินค้า
-  const updateQuantity = (productCode: string, newQuantity: number) => {
+  const updateQuantity = (productId: string, newQuantity: number) => {
     if (!user) return;
     if (newQuantity <= 0) {
-      removeFromCart(productCode); // ✅ ถ้าจำนวนเป็น 0 ให้ลบสินค้าออก
+      removeFromCart(productId);
       return;
     }
 
     fetch("http://localhost:5000/cart/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: user, productCode, quantity: newQuantity }),
+      body: JSON.stringify({ email: user, productId, quantity: newQuantity }),
     })
       .then((res) => res.json())
       .then((data) => setCart(data))
       .catch((error) => console.error("❌ Error updating cart:", error));
   };
 
-  // ✅ ลบสินค้าออกจากตะกร้า
-  const removeFromCart = (productCode: string) => {
+  const removeFromCart = (productId: string) => {
     if (!user) return;
-
+  
     fetch("http://localhost:5000/cart/remove", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: user, productCode }),
+      body: JSON.stringify({ email: user, productId }),
     })
       .then((res) => res.json())
-      .then((data) => setCart(data))
+      .then((data) => {
+        // ตรวจสอบว่าข้อมูลที่ได้จาก backend เป็น array หรือไม่
+        if (Array.isArray(data)) {
+          setCart(data); // ถ้าเป็น Array อัปเดตตะกร้า
+        } else {
+          console.error("❌ Error: cart data is not an array", data);  // ถ้าไม่ใช่ array ให้แสดงข้อผิดพลาด
+        }
+      })
       .catch((error) => console.error("❌ Error removing from cart:", error));
   };
+  
+  
 
   return (
     <UserContext.Provider
-      value={{ user, phoneNumber, cart, login, logout, updatePhoneNumber, addToCart, removeFromCart, updateQuantity }}
+      value={{
+        user,
+        userName,
+        phoneNumber,
+        cart,
+        login,
+        logout,
+        updatePhoneNumber,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+      }}
     >
       {children}
     </UserContext.Provider>
@@ -121,5 +161,8 @@ export const useUser = (): UserContextType => {
   if (!context) {
     throw new Error("useUser ต้องอยู่ภายใน UserProvider");
   }
-  return context;
+  return {
+    ...context,
+    cart: Array.isArray(context.cart) ? context.cart : [],  // ตรวจสอบให้ cart เป็น array
+  };
 };

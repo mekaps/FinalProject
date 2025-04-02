@@ -11,8 +11,16 @@ import RegisterPage from "./Component/RegisterPage";
 import { UserProvider } from "./Component/User"; 
 import ProductDetailPage from "./Component/ProductDetailPage";
 import MyCart from "./Component/Mycart";
+import CheckoutPage from "./Component/CheckoutPage";
+import EditProfile from "./Component/Editprofile";
 
+// นำเข้า Stripe
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import Purchase from "./Component/Purchase";
 
+// กำหนด Publishable Key ของ Stripe
+const stripePromise = loadStripe("pk_test_51R6CzM07q2471zn72tg6k1jSmStnS6WuKgNgUxzT73yzsSFEV8KPiAJW2AqlAyA7QgO5o99fgu89ZscpY7S91aUk00efKMyvDz"); // ใช้ Publishable Key ของคุณ
 
 const AppContent: React.FC = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -30,8 +38,16 @@ const AppContent: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
-          <Route path="/cart" element={<MyCart/>}/>
-
+          <Route path="/cart" element={<MyCart/>} />
+          <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/purchase" element={<Purchase />} />
+          
+          {/* ห่อ CheckoutPage ด้วย Elements */}
+          <Route path="/checkoutpage" element={
+            <Elements stripe={stripePromise}>
+              <CheckoutPage />
+            </Elements>
+          } />
         </Routes>
       </div>
 

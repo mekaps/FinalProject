@@ -23,11 +23,7 @@ const ProductHeader: React.FC = () => {
 
       {/* Right Section */}
       <div style={rightSectionStyle}>
-        {/* Search Bar */}
-        <div style={searchContainerStyle}>
-          <input type="text" placeholder="ค้นหา..." style={searchInputStyle} />
-          <img src="../src/assets/Front/search.png" alt="Search Icon" style={searchIconStyle} />
-        </div>
+
 
         {/* ถ้าล็อคอินแล้ว ให้แสดงไอคอนตะกร้าและไอคอน User */}
         {user && (
@@ -129,28 +125,6 @@ const rightSectionStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: "15px",
-};
-
-const searchContainerStyle: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  borderBottom: "1px solid #000",
-  paddingBottom: "3px",
-};
-
-const searchInputStyle: React.CSSProperties = {
-  border: "none",
-  outline: "none",
-  fontSize: "14px",
-  fontFamily: "'Arial', sans-serif",
-  color: "#000",
-};
-
-const searchIconStyle: React.CSSProperties = {
-  width: "20px",
-  height: "20px",
-  marginLeft: "5px",
-  cursor: "pointer",
 };
 
 /* ไอคอนตะกร้าสินค้า */

@@ -1,16 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // นำเข้า useNavigate
 import leftImage from "../assets/Front/Women.jpeg";
 import rightImage from "../assets/Front/men.jpeg";
 
 const FashionSection: React.FC = () => {
+  const navigate = useNavigate(); // ใช้ navigate สำหรับการนำทาง
+
+  // ฟังก์ชันสำหรับการคลิกทั้งสองฝั่ง
   const handleLeftClick = () => {
-    alert("คุณคลิกที่ภาพฝั่งซ้าย (แฟชั่นสำหรับผู้หญิง)");
-    // หรือเพิ่มฟังก์ชันการทำงานอื่น เช่นการนำทาง
+    navigate("products"); // นำทางไปยังหน้า ProductPage โดยไม่ส่งพารามิเตอร์
   };
 
   const handleRightClick = () => {
-    alert("คุณคลิกที่ภาพฝั่งขวา (แฟชั่นสำหรับผู้ชาย)");
-    // หรือเพิ่มฟังก์ชันการทำงานอื่น เช่นการนำทาง
+    navigate("products"); // นำทางไปยังหน้า ProductPage โดยไม่ส่งพารามิเตอร์
   };
 
   return (
@@ -32,18 +34,24 @@ const FashionSection: React.FC = () => {
         }}
         onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")} // ซูมเข้าเมื่อชี้
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")} // กลับสู่ขนาดเดิม
+      ></div>
+
+      {/* Middle Section for GHACA */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)", // จัดข้อความให้อยู่ตรงกลางของหน้าจอ
+          color: "#fff",
+          fontSize: "48px",
+          fontWeight: "400",
+          textAlign: "center",
+          zIndex: 10, // ให้อยู่บนสุด
+          fontFamily: "'Joan', sans-serif",
+        }}
       >
-        <span
-          style={{
-            position: "absolute",
-            bottom: "50px", // ขยับขึ้นมา
-            color: "#fff",
-            fontSize: "24px",
-            fontWeight: "bold",
-          }}
-        >
-          แฟชั่นสำหรับผู้หญิง
-        </span>
+        GHACA
       </div>
 
       {/* Right Section */}
@@ -63,19 +71,7 @@ const FashionSection: React.FC = () => {
         }}
         onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")} // ซูมเข้าเมื่อชี้
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")} // กลับสู่ขนาดเดิม
-      >
-        <span
-          style={{
-            position: "absolute",
-            bottom: "50px", // ขยับขึ้นมา
-            color: "#fff",
-            fontSize: "24px",
-            fontWeight: "bold",
-          }}
-        >
-          แฟชั่นสำหรับผู้ชาย
-        </span>
-      </div>
+      ></div>
     </div>
   );
 };
