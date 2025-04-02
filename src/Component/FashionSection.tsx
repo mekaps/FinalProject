@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // นำเข้า useNavigate
-import leftImage from "../assets/Front/Women.jpeg";
-import rightImage from "../assets/Front/men.jpeg";
+import leftImage from "../public/Front/Women.jpeg";
+import rightImage from "../public/Front/men.jpeg";
 
 const FashionSection: React.FC = () => {
   const navigate = useNavigate(); // ใช้ navigate สำหรับการนำทาง

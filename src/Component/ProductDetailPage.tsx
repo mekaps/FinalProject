@@ -53,7 +53,7 @@ const ProductDetailPage: React.FC = () => {
               src={`https://backend-production-4db9.up.railway.app${product.image}`}
               alt={product.name}
               style={imageStyle}
-              onError={(e) => (e.currentTarget.src = "../src/assets/Front/women.jpeg")}
+              onError={(e) => (e.currentTarget.src = "../public/assets/Front/women.jpeg")}
             />
           </div>
 

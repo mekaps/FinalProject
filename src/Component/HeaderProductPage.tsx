@@ -14,7 +14,7 @@ const ProductHeader: React.FC = () => {
     <div style={headerStyle}>
       {/* Menu Section */}
       <div style={menuStyle} onClick={() => setIsMenuOpen(true)}>
-        <img src="../src/assets/Front/menu.png" alt="Menu Icon" style={menuIconStyle} />
+        <img src="../public/assets/Front/menu.png" alt="Menu Icon" style={menuIconStyle} />
         <span style={menuTextStyle}>MENU</span>
       </div>
 
@@ -31,7 +31,7 @@ const ProductHeader: React.FC = () => {
             {/* ไอคอนตะกร้าสินค้า */}
             <div style={{ position: "relative", display: "inline-block" }}>
               <img
-                src="../src/assets/Front/cart.png"
+                src="../public/assets/Front/cart.png"
                 alt="Cart Icon"
                 style={cartIconStyle}
                 onClick={() => navigate("/cart")}
@@ -43,7 +43,7 @@ const ProductHeader: React.FC = () => {
 
             {/* ไอคอน User (คลิกเพื่อเปิดเมนู) */}
             <img
-              src="../src/assets/Front/usericon.png"
+              src="../public/assets/Front/usericon.png"
               alt="User Icon"
               style={userIconStyle}
               onClick={() => setIsUserMenuOpen(true)}

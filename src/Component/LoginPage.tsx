@@ -42,7 +42,7 @@ const LoginPage: React.FC = () => {
           
           {/* ✅ ไอคอน User อยู่ตรงกลางแนวตั้ง */}
           <div style={userIconContainerStyle}>
-            <img src="../src/assets/Front/usericon.png" alt="User" style={userIconStyle} />
+            <img src="../public/assets/Front/usericon.png" alt="User" style={userIconStyle} />
           </div>
 
           {error && <p style={{ color: "red" }}>{error}</p>}
