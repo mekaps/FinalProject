@@ -110,7 +110,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return;
     }
 
-    fetch("https://backend-production-4db9.up.railway.app//cart/update", {
+    fetch("https://backend-production-4db9.up.railway.app/cart/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: user, productId, quantity: newQuantity }),
@@ -123,7 +123,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const removeFromCart = (productId: string) => {
     if (!user) return;
 
-    fetch("https://backend-production-4db9.up.railway.app//cart/remove", {
+    fetch("https://backend-production-4db9.up.railway.app/cart/remove", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: user, productId }),
