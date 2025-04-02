@@ -4,6 +4,9 @@ import { useUser } from "./User";
 import Menubar from "./MenuBar";
 import UserMenu from "./UserMenu";
 import menuImage from '../assets/Front/menu.png';
+import cart from '../assets/Front/cart.png';
+import usericon from '../assets/Front/usericon.png';
+
 
 const ProductHeader: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +35,7 @@ const ProductHeader: React.FC = () => {
             {/* ไอคอนตะกร้าสินค้า */}
             <div style={{ position: "relative", display: "inline-block" }}>
               <img
-                src="../public/assets/Front/cart.png"
+                src={cart}
                 alt="Cart Icon"
                 style={cartIconStyle}
                 onClick={() => navigate("/cart")}
@@ -44,7 +47,7 @@ const ProductHeader: React.FC = () => {
 
             {/* ไอคอน User (คลิกเพื่อเปิดเมนู) */}
             <img
-              src="../public/assets/Front/usericon.png"
+              src={usericon}
               alt="User Icon"
               style={userIconStyle}
               onClick={() => setIsUserMenuOpen(true)}
