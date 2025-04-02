@@ -1,4 +1,5 @@
 import React from "react";
+import pp from "../assets/Front/Prompay.png";
 
 const Footer: React.FC = () => {
   return (
@@ -55,7 +56,7 @@ const Footer: React.FC = () => {
           <div style={{ fontWeight: "bold", marginBottom: "10px" }}>ช่องทางการชำระเงิน</div>
           <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
             <img
-              src="../assets/Front/Prompay.png" // แก้ไขเส้นทางรูปภาพ
+              src={pp} // แก้ไขเส้นทางรูปภาพ
               style={{ width: "110px" }}
             />
           </div>
