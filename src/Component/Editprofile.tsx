@@ -23,7 +23,7 @@ const EditProfile: React.FC = () => {
   // ฟังก์ชันเช็คว่า email เดิมมีในระบบหรือไม่
   const checkEmailExists = async (email: string) => {
     try {
-      const response = await fetch("http://localhost:5000/auth/check-email", {
+      const response = await fetch("https://backend-production-4db9.up.railway.app/auth/check-email", {
         method: "POST", 
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const EditProfile: React.FC = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/auth/addresses", {
+        const response = await axios.get("https://backend-production-4db9.up.railway.app/auth/addresses", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -89,7 +89,7 @@ const EditProfile: React.FC = () => {
 
     try {
       // ส่งข้อมูลไปที่ Backend
-      const response = await fetch("http://localhost:5000/auth/update", {
+      const response = await fetch("https://backend-production-4db9.up.railway.app/auth/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

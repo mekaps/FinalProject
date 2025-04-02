@@ -21,7 +21,7 @@ const Purchase: React.FC = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/auth/orders", {
+        const response = await axios.get("https://backend-production-4db9.up.railway.app/auth/orders", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

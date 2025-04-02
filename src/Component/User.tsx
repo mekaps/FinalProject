@@ -34,7 +34,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // ฟังก์ชันดึงข้อมูลตะกร้าจาก Backend
   const fetchCartData = () => {
     if (user) {
-      fetch(`http://localhost:5000/cart/${user}`)
+      fetch(`https://backend-production-4db9.up.railway.app/cart/${user}`)
         .then((res) => res.json())
         .then((data) => {
           setUserName(data.name);  // ตั้งค่า userName
@@ -68,7 +68,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const updatePhoneNumber = (newPhone: string) => {
     if (!user) return;
 
-    fetch("http://localhost:5000/user/updatePhone", {
+    fetch("https://backend-production-4db9.up.railway.app/user/updatePhone", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: user, phoneNumber: newPhone }),
@@ -91,7 +91,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const email = user;
 
-    fetch("http://localhost:5000/cart/add", { 
+    fetch("https://backend-production-4db9.up.railway.app/cart/add", { 
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, products: [{ ...product, quantity: 1 }] }),  // ส่งไซส์ที่ผู้ใช้เลือก
@@ -110,7 +110,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return;
     }
 
-    fetch("http://localhost:5000/cart/update", {
+    fetch("https://backend-production-4db9.up.railway.app//cart/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: user, productId, quantity: newQuantity }),
@@ -123,7 +123,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const removeFromCart = (productId: string) => {
     if (!user) return;
 
-    fetch("http://localhost:5000/cart/remove", {
+    fetch("https://backend-production-4db9.up.railway.app//cart/remove", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: user, productId }),

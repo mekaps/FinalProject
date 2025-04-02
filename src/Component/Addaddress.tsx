@@ -26,7 +26,7 @@ const AddAddressModal: React.FC<ModalProps> = ({ isOpen, onClose, onSave, email 
     }
 
     try {
-      const response = await fetch("http://localhost:5000/auth/add-address", {
+      const response = await fetch("https://backend-production-4db9.up.railway.app/auth/add-address", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

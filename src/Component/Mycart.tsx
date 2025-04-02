@@ -25,7 +25,7 @@ const MyCart: React.FC = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/auth/addresses", {
+        const response = await axios.get("https://backend-production-4db9.up.railway.app/auth/addresses", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -80,7 +80,7 @@ const MyCart: React.FC = () => {
   
       // ส่งข้อมูล email และ cart ไปยัง Backend
       const clearResponse = await axios.post(
-        "http://localhost:5000/auth/cart-clear",
+        "https://backend-production-4db9.up.railway.app/auth/cart-clear",
         { 
           email: emailInput,  // ส่ง email ที่กรอกมาจากฟอร์ม
           cart: cart.map((item) => ({
@@ -124,7 +124,7 @@ const MyCart: React.FC = () => {
       }
 
       await axios.post(
-        "http://localhost:5000/auth/send-order-email",
+        "https://backend-production-4db9.up.railway.app/auth/send-order-email",
         {
           email,
           cartItems,
@@ -188,7 +188,7 @@ const MyCart: React.FC = () => {
                 <tr key={item._id} style={rowStyle}>
                   <td style={tdStyle}>
                     <img
-                      src={`http://localhost:5000${item.image}`}
+                      src={`https://backend-production-4db9.up.railway.app${item.image}`}
                       alt={item.name}
                       style={productImageStyle}
                     />

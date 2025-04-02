@@ -23,7 +23,7 @@ const ProductPage: React.FC = () => {
 
   // ✅ ดึงข้อมูลจาก Backend (MongoDB)
   useEffect(() => {
-    fetch("http://localhost:5000/products")
+    fetch("https://backend-production-4db9.up.railway.app/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("❌ Error fetching products:", error));
@@ -92,7 +92,7 @@ const ProductPage: React.FC = () => {
               onClick={() => goToProductDetails(product._id)} // ✅ คลิกแล้วไปหน้า Product Details
             >
               <img 
-                src={`http://localhost:5000${product.image}`} 
+                src={`https://backend-production-4db9.up.railway.app${product.image}`} 
                 alt={product.name} 
                 style={{ width: "100%", height: "180px", objectFit: "cover" }} 
               />

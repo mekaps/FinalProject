@@ -11,7 +11,7 @@ const ProductDetailPage: React.FC = () => {
   const { addToCart, user } = useUser();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/products/${id}`)
+    fetch(`https://backend-production-4db9.up.railway.app/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
@@ -50,7 +50,7 @@ const ProductDetailPage: React.FC = () => {
         <div style={contentStyle}>
           <div style={imageContainerStyle}>
             <img
-              src={`http://localhost:5000${product.image}`}
+              src={`https://backend-production-4db9.up.railway.app${product.image}`}
               alt={product.name}
               style={imageStyle}
               onError={(e) => (e.currentTarget.src = "../src/assets/Front/women.jpeg")}

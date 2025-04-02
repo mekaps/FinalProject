@@ -52,7 +52,7 @@ const CheckoutPage: React.FC = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:5000/create-payment-intent", {
+      const response = await axios.post("https://backend-production-4db9.up.railway.app/create-payment-intent", {
         amount: totalAmount,
         token: token.id,
       });
@@ -71,10 +71,10 @@ const CheckoutPage: React.FC = () => {
           // ข้อมูลการสั่งซื้อที่จะส่งไปยัง Backend
           
           // ส่งข้อมูลการสั่งซื้อไปที่ backend
-          //await axios.post("http://localhost:5000/order/complete", orderData);
+          //await axios.post("https://backend-production-4db9.up.railway.app/order/complete", orderData);
   
           // ลบสินค้าจากตะกร้า (หลังจากการชำระเงินสำเร็จ)
-          //await axios.post("http://localhost:5000/cart/clear", { email: user });
+          //await axios.post("https://backend-production-4db9.up.railway.app/cart/clear", { email: user });
         }
       }
     } catch (err) {
