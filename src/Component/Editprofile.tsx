@@ -17,7 +17,7 @@ const EditProfile: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false); // สถานะการโหลดข้อมูล
   const [error, setError] = useState(""); // สำหรับเก็บข้อผิดพลาด
 
-  const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
+  const [showScrollToTopButton] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // ฟังก์ชันเช็คว่า email เดิมมีในระบบหรือไม่

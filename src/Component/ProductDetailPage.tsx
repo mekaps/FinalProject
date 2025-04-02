@@ -173,32 +173,7 @@ const stockStyle: React.CSSProperties = {
   color: "#27ae60",
 };
 
-const cartButtonStyle: React.CSSProperties = {
-  backgroundColor: "#312CCC",
-  color: "#FFFFFF",
-  fontSize: "18px",
-  fontWeight: "bold",
-  padding: "12px 20px",
-  border: "none",
-  cursor: "pointer",
-  borderRadius: "5px",
-  width: "100%",
-  textAlign: "center",
-  marginBottom: "10px",
-};
 
-const buyNowButtonStyle: React.CSSProperties = {
-  backgroundColor: "#f04e30",
-  color: "#FFFFFF",
-  fontSize: "18px",
-  fontWeight: "bold",
-  padding: "12px 20px",
-  border: "none",
-  cursor: "pointer",
-  borderRadius: "5px",
-  width: "100%",
-  textAlign: "center",
-};
 
 const sizeContainerStyle: React.CSSProperties = {
   marginBottom: "20px",

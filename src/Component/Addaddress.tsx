@@ -49,7 +49,6 @@ const AddAddressModal: React.FC<ModalProps> = ({ isOpen, onClose, onSave, email 
       }
     } catch (error) {
       console.error(error);
-      alert(`เกิดข้อผิดพลาดในการบันทึกที่อยู่: ${error.message}`);
     }
   };
 

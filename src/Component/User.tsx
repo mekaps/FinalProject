@@ -4,11 +4,13 @@ interface UserContextType {
   user: string | null;
   userName: string | null;
   phoneNumber: string;
-  cart: { _id: string; name: string; image: string; price: number; quantity: number }[];
+  cart: { _id: string; name: string; image: string; price: number; quantity: number; size?: string }[];
+  cartCount: number;
+  userEmail: string | null;
   login: (email: string) => void;
   logout: () => void;
   updatePhoneNumber: (newPhone: string) => void;
-  addToCart: (product: { _id: string; name: string; image: string; price: number }) => void;
+  addToCart: (product: { _id: string; name: string; image: string; price: number; size: string }) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, newQuantity: number) => void;
 }
@@ -25,7 +27,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     image: string;
     price: number;
     quantity: number;
+    size?: string;
   }[]>([]);
+  const [userEmail, setUserEmail] = useState<string | null>(null); // userEmail state
 
   // ฟังก์ชันดึงข้อมูลตะกร้าจาก Backend
   const fetchCartData = () => {
@@ -44,6 +48,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // ดึงข้อมูลจาก Backend เมื่อ login
   useEffect(() => {
     if (user) {
+      setUserEmail(user);  // ตั้งค่า userEmail เมื่อ login
       fetchCartData(); // เรียกใช้ฟังก์ชัน fetchCartData
     }
   }, [user]); // เมื่อ user เปลี่ยนแปลงจะดึงข้อมูลใหม่
@@ -57,6 +62,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setCart([]); // ลบข้อมูลตะกร้าเมื่อ logout
     setPhoneNumber("");
     setUserName(null);
+    setUserEmail(null);  // ลบข้อมูล userEmail เมื่อ logout
   };
 
   const updatePhoneNumber = (newPhone: string) => {
@@ -77,14 +83,14 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const addToCart = (product: { _id: string; name: string; image: string; size: string; price: number }) => {
     if (!user) return;
-  
+
     if (!product._id || !product.price || !product.size) {
       console.error("❌ Missing _id, price, or size", product);
       return;
     }
-  
+
     const email = user;
-  
+
     fetch("http://localhost:5000/cart/add", { 
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -116,7 +122,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const removeFromCart = (productId: string) => {
     if (!user) return;
-  
+
     fetch("http://localhost:5000/cart/remove", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -124,17 +130,14 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     })
       .then((res) => res.json())
       .then((data) => {
-        // ตรวจสอบว่าข้อมูลที่ได้จาก backend เป็น array หรือไม่
         if (Array.isArray(data)) {
           setCart(data); // ถ้าเป็น Array อัปเดตตะกร้า
         } else {
-          console.error("❌ Error: cart data is not an array", data);  // ถ้าไม่ใช่ array ให้แสดงข้อผิดพลาด
+          console.error("❌ Error: cart data is not an array", data);
         }
       })
       .catch((error) => console.error("❌ Error removing from cart:", error));
   };
-  
-  
 
   return (
     <UserContext.Provider
@@ -143,6 +146,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         userName,
         phoneNumber,
         cart,
+        cartCount: cart.length,  // นับจำนวนสินค้าในตะกร้า
+        userEmail,  // ส่ง userEmail ไปใน context
         login,
         logout,
         updatePhoneNumber,

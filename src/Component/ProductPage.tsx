@@ -2,11 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ ใช้สำหรับนำทาง
 import ProductHeader from "./HeaderProductPage";
 
+type Product = {
+  _id: string;
+  name: string;
+  image: string;
+  price: number;
+  quantity: number;
+};
+
+
 const ProductPage: React.FC = () => {
-  const [products, setProducts] = useState([]); 
+  const [products, setProducts] = useState<Product[]>([]);
   const [sortOrder, setSortOrder] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [footerSize, setFooterSize] = useState(100);
+  const [footerSize] = useState(100);
   const [searchQuery, setSearchQuery] = useState<string>(""); // เพิ่ม state สำหรับค้นหาสินค้า
   const navigate = useNavigate(); // ✅ ใช้ Navigate
 

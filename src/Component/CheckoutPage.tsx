@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useLocation } from "react-router-dom";
+//import { loadStripe } from "@stripe/stripe-js";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import jsPDF from "jspdf"; // Import jsPDF
 import Modal from "react-modal"; // Import Modal for popup
 
 // Stripe public key
-const stripePromise = loadStripe("pk_test_51R6CzM07q2471zn72tg6k1jSmStnS6WuKgNgUxzT73yzsSFEV8KPiAJW2AqlAyA7QgO5o99fgu89ZscpY7S91aUk00efKMyvDz");
+//const stripePromise = loadStripe("pk_test_51R6CzM07q2471zn72tg6k1jSmStnS6WuKgNgUxzT73yzsSFEV8KPiAJW2AqlAyA7QgO5o99fgu89ZscpY7S91aUk00efKMyvDz");
 
 Modal.setAppElement("#root"); // For accessibility
 
 const CheckoutPage: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const { totalAmount, shippingAddress, products } = location.state;
+  //const navigate = useNavigate();
+  const { totalAmount, shippingAddress } = location.state;
 
   const [error, setError] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -69,18 +69,12 @@ const CheckoutPage: React.FC = () => {
           setModalIsOpen(true); // เปิด modal สำหรับใบเสร็จ
   
           // ข้อมูลการสั่งซื้อที่จะส่งไปยัง Backend
-          const orderData = {
-            email: user,  // ส่ง email ของผู้ใช้ที่ทำการล็อกอิน
-            shippingAddress,
-            products,
-            totalAmount,
-          };
-  
+          
           // ส่งข้อมูลการสั่งซื้อไปที่ backend
-          await axios.post("http://localhost:5000/order/complete", orderData);
+          //await axios.post("http://localhost:5000/order/complete", orderData);
   
           // ลบสินค้าจากตะกร้า (หลังจากการชำระเงินสำเร็จ)
-          await axios.post("http://localhost:5000/cart/clear", { email: user });
+          //await axios.post("http://localhost:5000/cart/clear", { email: user });
         }
       }
     } catch (err) {
@@ -174,7 +168,11 @@ const pageContainerStyle: React.CSSProperties = {
   padding: "20px",
   backgroundColor: "#fff",
 };
-
+const modalContentStyle: React.CSSProperties = {
+  marginBottom: "10px",
+  textAlign: "center",  // ใช้ค่าที่ถูกต้อง
+  color: "black"
+};
 const titleStyle: React.CSSProperties = {
   fontSize: "24px",
   fontWeight: "bold",
@@ -241,12 +239,6 @@ const modalStyle = {
     width: "400px",
     backgroundColor: "#fff"
   },
-};
-
-const modalContentStyle = {
-  marginBottom: "20px",
-  textAlign: "center",
-  color: "#333",
 };
 
 const downloadButtonStyle = {

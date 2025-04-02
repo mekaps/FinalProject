@@ -12,7 +12,7 @@ const MyCart: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [emailInput, setEmailInput] = useState<string>("");  // กรอก email เพื่อยืนยัน
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);  // เช็คความถูกต้องของ email
+  const [isEmailValid] = useState<boolean>(true);  // เช็คความถูกต้องของ email
 
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -399,7 +399,6 @@ const quantityInputStyle: React.CSSProperties = {
   border: "1px solid #ddd",
   width: "30px",
   textAlign: "center",
-  border: "1px solid #000",
   fontSize: "16px",
   padding: "5px",
   color: "#000",
