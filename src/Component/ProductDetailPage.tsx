@@ -73,16 +73,17 @@ const ProductDetailPage: React.FC = () => {
             <div style={sizeContainerStyle}>
               <h3 style={sizeTitleStyle}>เลือกไซส์</h3>
               <div style={sizeOptionsContainerStyle}>
-                {["S", "M", "L", "XL"].map((size) => (
-                  <button
-                    key={size}
-                    style={sizeButtonStyle}
-                    onClick={() => handleAddToCart(size)} // เพิ่มไซส์ที่เลือกไปยังตะกร้า
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
+  {["S", "M", "L", "XL"].map((size) => (
+    <button
+      key={size}
+      style={sizeButtonStyle}
+      onClick={() => handleAddToCart(size)}
+      disabled={product.quantity === 0}  // ปิดการใช้งานปุ่มเมื่อสินค้าหมดสต็อก
+    >
+      {size}
+    </button>
+  ))}
+</div>
             </div>
           </div>
         </div>

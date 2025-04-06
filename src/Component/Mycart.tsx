@@ -96,15 +96,11 @@ const MyCart: React.FC = () => {
       );
   
       if (clearResponse.status === 200) {
-        alert("สินค้าถูกลบออกจากตะกร้าเรียบร้อยแล้ว");
         await sendOrderConfirmationEmail(emailInput, cart, totalAmount, shippingAddress);
       } else {
-        alert("เกิดข้อผิดพลาดในการลบสินค้าจากตะกร้า");
       }
     } catch (error) {
-      console.error("Error clearing cart:", error);
-      alert("ไม่สามารถลบสินค้าจากตะกร้าได้");
-    }
+      console.error("Error clearing cart:", error);    }
   
     // ไปยังหน้าชำระเงิน
     navigate("/checkoutpage", { state: { totalAmount, shippingAddress } });

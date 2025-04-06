@@ -121,7 +121,7 @@ const accountSectionStyle: React.CSSProperties = {
 
 const accountTextStyle: React.CSSProperties = {
   color: "black",
-  fontSize: "16px",
+  fontSize: "12px",
   fontWeight: "bold",
 };
 
