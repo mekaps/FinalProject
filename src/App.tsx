@@ -33,7 +33,7 @@ const AppContent: React.FC = () => {
 
       <div style={{ flex: 1, paddingBottom: "320px" }}> {/* ป้องกัน Footer ถูกบัง */}
         <Routes>
-          <Route path="/" element={<FashionSection />} />
+          <Route path="/FinalProject" element={<FashionSection />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
